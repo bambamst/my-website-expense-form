@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>แบบฟอร์มเบิกค่าใช้จ่ายและจัดซื้อ</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧾</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f1f4f9;--paper:#fff;--ink:#1b2433;--mute:#66707f;--line:#d5dce8;--acc:#1d4f91;--accsoft:#e4edf9;--warn:#a33b2b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121821;--paper:#1a2230;--ink:#e8edf5;--mute:#9aa5b5;--line:#323f55;--acc:#7fb0f0;--accsoft:#1f2d44;--warn:#e68a7a}}
+:root[data-theme="dark"]{--bg:#121821;--paper:#1a2230;--ink:#e8edf5;--mute:#9aa5b5;--line:#323f55;--acc:#7fb0f0;--accsoft:#1f2d44;--warn:#e68a7a}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Sarabun","Noto Sans Thai",Tahoma,sans-serif;line-height:1.6;font-size:16px}
+.wrap{max-width:960px;margin:0 auto;padding:20px 14px 60px}
+.paper{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:28px 26px;margin-bottom:18px}
+h1{font-size:1.5rem;text-align:center;margin:0 0 4px}
+.sub{text-align:center;color:var(--mute);margin:0 0 16px}
+h2{font-size:1.1rem;margin:0 0 12px;padding-bottom:6px;border-bottom:2px solid var(--acc)}
+.type-selector{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;background:var(--accsoft);padding:10px 16px;border-radius:6px;margin-bottom:20px}
+.type-selector label,.radio-grp label{display:inline-flex;align-items:center;gap:6px;font-size:.95rem;cursor:pointer;color:var(--ink);font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+.full{grid-column:1/-1}
+label{display:block;font-size:.88rem;color:var(--mute);margin-bottom:2px}
+input,select,textarea{width:100%;font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);border-radius:4px;padding:7px 9px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.radio-grp{display:flex;gap:14px;align-items:center;flex-wrap:wrap;min-height:38px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:1060px}
+th,td{border:1px solid var(--line);padding:5px;vertical-align:top;font-size:.92rem}
+th{background:var(--accsoft);text-align:center;font-weight:600}
+td input,td select{border:none;padding:4px}
+td.n{text-align:center;width:36px;padding-top:10px}
+td.amt input{text-align:right}
+.thumb{width:56px;height:56px;object-fit:cover;border-radius:4px;border:1px solid var(--line);display:block;margin-bottom:4px}
+.fileb{font-size:.8rem;color:var(--acc);cursor:pointer;text-decoration:underline;display:inline-block}
+.fileb input{display:none}
+button{font:inherit;cursor:pointer;border-radius:4px;border:1px solid var(--acc);background:var(--acc);color:#fff;padding:8px 16px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) button{color:#0d1a2e}}
+button.ghost{background:transparent;color:var(--acc)}
+button.x{background:transparent;border:none;color:var(--warn);padding:4px 8px}
+.tot{display:flex;justify-content:flex-end;gap:14px;align-items:baseline;margin-top:12px;font-weight:700;font-size:1.1rem}
+.bahttext{text-align:right;color:var(--mute);margin-top:2px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.att{display:grid;grid-template-columns:1fr;gap:18px}
+.att figure{margin:0;border:1px solid var(--line);border-radius:4px;padding:8px;break-inside:avoid}
+.att img{width:100%;max-height:80vh;object-fit:contain;display:block}
+.att figcaption{font-size:.85rem;margin-top:6px}
+.sign-single{margin-top:30px;max-width:320px;margin-left:auto;text-align:center}
+.sign-single .ln{border-bottom:1px dotted var(--mute);margin:0 15px 8px;padding-top:45px}
+.date-wrap{position:relative}
+.date-th-text{font-size:.82rem;color:var(--acc);margin-top:2px;min-height:1.2em}
+.p-only{display:none}
+@media (max-width:600px){.grid{grid-template-columns:1fr}.paper{padding:18px 14px}}
+/* polish */
+body{background-image:linear-gradient(180deg,var(--accsoft),transparent 280px);background-repeat:no-repeat}
+.paper{border-top:4px solid var(--acc);border-radius:10px;padding:32px 34px;box-shadow:0 1px 2px rgba(0,0,0,.05),0 10px 28px rgba(29,79,145,.10)}
+h1{color:var(--acc);letter-spacing:.2px}
+.sub{font-size:.85rem;letter-spacing:.8px;text-transform:uppercase}
+h2{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding-bottom:8px}
+h2::before{content:"";width:4px;height:1.1em;background:var(--acc);border-radius:2px}
+input[type=radio],input[type=checkbox]{width:auto;accent-color:var(--acc)}
+input,select,textarea{border-radius:6px;background:var(--paper);transition:border-color .15s,box-shadow .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--accsoft)}
+td input,td select{background:transparent;box-shadow:none}
+.type-selector{border:1px solid var(--line);border-radius:999px;padding:6px;gap:6px}
+.type-selector label{position:relative;margin:0;padding:7px 16px;border-radius:999px;transition:background .15s,color .15s}
+.type-selector input{position:absolute;opacity:0;pointer-events:none}
+.type-selector label:has(input:checked){background:var(--acc);color:var(--paper)}
+.type-selector label:has(input:focus-visible){outline:2px solid var(--acc);outline-offset:2px}
+th{background:var(--acc);color:var(--paper);border-color:var(--acc)}
+tbody tr:nth-child(even){background:color-mix(in srgb,var(--accsoft) 40%,transparent)}
+tbody tr:hover{background:var(--accsoft)}
+.fileb{border:1px dashed var(--acc);border-radius:999px;padding:1px 10px;text-decoration:none;margin-top:2px}
+.fileb:hover{background:var(--accsoft)}
+button{border-radius:8px;font-weight:600;padding:9px 18px;box-shadow:0 1px 2px rgba(0,0,0,.15);transition:filter .15s}
+button:hover{filter:brightness(1.1)}
+button.ghost,button.x{box-shadow:none}
+.tot{background:var(--accsoft);padding:10px 16px;border-radius:8px}
+#total{font-size:1.35rem;color:var(--acc)}
+.att figure{border-radius:8px;background:var(--paper)}
+#attEmpty{border:1px dashed var(--line);border-radius:8px}
+.wrap>.actions{position:sticky;bottom:0;background:var(--bg);padding:12px 0;margin-top:0;border-top:1px solid var(--line)}
+#attContainer h2{margin-bottom:18px}
+.thd{display:flex;gap:6px}
+.thd select{width:auto;flex:none}
+.thd select:nth-child(1){width:78px}
+.thd select:nth-child(2){flex:none;width:100px}
+.thd select:nth-child(3){width:96px}
+.thd.compact{gap:3px}
+.thd.compact select{padding:3px 0;font-size:.85rem;border:1px solid var(--line);border-radius:4px}
+.thd.compact select:nth-child(1){width:48px}
+.thd.compact select:nth-child(2){flex:none;min-width:0;width:68px}
+.thd.compact select:nth-child(3){width:66px}
+.date-th-text{display:none}
+@media print{
+  :root,:root:not([data-theme="light"]),:root[data-theme="dark"]{--bg:#fff;--paper:#fff;--ink:#1b2433;--mute:#555;--line:#b8c4d6;--acc:#1d4f91;--accsoft:#e4edf9}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}.noprint,.fileb,button,.hint,.type-selector{display:none!important}
+  .paper{border:none;padding:0}.wrap{padding:0}
+  input,select,textarea{border:none;padding:0;display:none}
+  .p-only{display:block}
+  .thd{display:none!important}
+  .paper{box-shadow:none;border-radius:0}
+  body{background-image:none}
+  th{background:var(--acc)!important;color:#fff!important}
+  tbody tr{background:none!important}
+  .tot{background:none;padding:0}
+  #total{font-size:inherit;color:inherit}
+  h1{color:var(--acc)}.sub{text-transform:none;letter-spacing:0}
+  h2::before{display:none}
+  label:has(.rn:not(:checked)){display:none}
+  .wrap>.actions{position:static}
+  table{min-width:0}.tw{overflow:visible}
+  .pagebreak{page-break-before:always}
+  .att{gap:10px}
+  .att figure{break-inside:avoid;page-break-inside:avoid;border:1px solid var(--line);border-radius:6px;padding:6px;text-align:left;margin:0 0 6px}
+  .att img{width:100%;height:auto;max-height:10.5cm;object-fit:contain;margin:0}
+  .att figcaption{font-size:.85rem;margin-top:5px}
+  @page{size:A4;margin:1.5cm}
+  html{font-size:13px}body{font-size:13px;line-height:1.4}
+  h1{font-size:1.3rem}.sub{margin-bottom:10px}
+  h2{margin:20px 0 10px!important;font-size:1rem}
+  .paper>h2:first-of-type{margin-top:14px!important}
+  .grid{gap:10px 20px}
+  th,td{padding:3px 4px}
+  .thumb{display:none}
+  .sign-single,.tot{break-inside:avoid;page-break-inside:avoid}
+  .sign-single .ln{padding-top:35px}
+  label{font-size:.8rem;margin-bottom:0}
+  .p-only{min-height:1.6em;border-bottom:1px dotted #999;font-weight:600;padding:0 4px}
+  table{table-layout:fixed;width:100%}
+  th:nth-child(1){width:5%!important}th:nth-child(2){width:14%!important}th:nth-child(3){width:16%!important}
+  th:nth-child(5){width:7%!important}th:nth-child(6){width:8%!important}th:nth-child(7){width:12%!important}th:nth-child(8){width:11%!important}
+  td{word-break:break-word}
+  .sign-single{margin-top:40px}
+  .paper>h1{font-size:1.5rem;margin-bottom:2px;padding-bottom:6px;border-bottom:3px double var(--acc)}
+  .sub{margin:4px 0 14px;color:#666}
+  h2{background:var(--accsoft);border-bottom:none;border-left:4px solid var(--acc);padding:4px 10px!important;margin:18px 0 10px!important}
+  label{font-size:.75rem;color:#555}
+  .p-only{border-bottom:1px solid #bbb;min-height:1.7em;font-weight:600}
+  td .p-only{border-bottom:none;min-height:0;font-weight:400}
+  table{border:1px solid #555}
+  th{border:1px solid var(--acc);padding:6px 4px;font-size:.85rem;vertical-align:middle}
+  td{border:1px solid #aaa;padding:6px;vertical-align:middle;height:30px}
+  td.amt,td.amt .p-only{text-align:right}
+  .tot{border:1px solid var(--acc);background:var(--accsoft);padding:6px 14px;width:max-content;margin-left:auto}
+  .bahttext{color:#000;margin-top:6px;font-size:.9rem}
+  .sign-single{max-width:280px}
+  #attContainer h2{margin-bottom:22px!important}
+  #signName,#signDate{border:none;min-height:0;font-weight:400;text-align:center;margin-top:2px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="paper">
+<div class="type-selector noprint">
+  <label><input type="radio" name="formType" value="travel" checked> เบิกค่าเดินทาง / ปฏิบัติงาน</label>
+  <label><input type="radio" name="formType" value="purchase"> เบิกซื้อของเข้าบริษัท</label>
+</div>
+
+<h1 id="titleText">ใบเบิกค่าใช้จ่ายในการเดินทางและปฏิบัติงาน</h1>
+<p class="sub" id="subTitleText">Expense Reimbursement Form</p>
+
+<h2>ข้อมูลผู้ขอเบิก</h2>
+<div class="grid">
+<div>
+  <label for="name">ชื่อ-นามสกุล</label>
+  <input id="name">
+  <div class="p-only" id="p_name"></div>
+</div>
+<div>
+  <label for="pos">ตำแหน่ง</label>
+  <input id="pos">
+  <div class="p-only" id="p_pos"></div>
+</div>
+<div class="full">
+  <label>สังกัด / แผนก</label>
+  <div class="radio-grp noprint">
+    <label><input type="radio" name="deptOpt" value="แผนกพัฒนาโปรแกรม" checked> แผนกพัฒนาโปรแกรม</label>
+    <label><input type="radio" name="deptOpt" value="แผนก IT Support"> แผนก IT Support</label>
+    <label><input type="radio" name="deptOpt" value="other"> อื่น ๆ</label>
+    <input id="deptOther" style="display:none;width:200px" placeholder="ระบุชื่อแผนก">
+  </div>
+  <div class="p-only" id="p_dept"></div>
+</div>
+<div>
+  <label for="date">วันที่ทำรายการ</label>
+  <div class="date-wrap">
+    <input id="date" type="date">
+    <div class="date-th-text noprint" id="date_th"></div>
+    <div class="p-only" id="p_date"></div>
+  </div>
+</div>
+</div>
+
+<h2 style="margin-top:22px">รายละเอียด</h2>
+<div class="grid">
+<div class="full">
+  <label for="purposePreset">วัตถุประสงค์</label>
+  <select id="purposePreset" class="noprint" style="margin-bottom:6px"></select>
+ <input id="purpose" placeholder="">
+  <div class="p-only" id="p_purpose"></div>
+</div>
+
+<div class="field-travel">
+  <label for="from">เดินทางจาก</label>
+  <input id="from">
+  <div class="p-only" id="p_from"></div>
+</div>
+<div class="field-travel">
+  <label for="to">เดินทางไป</label>
+  <input id="to">
+  <div class="p-only" id="p_to"></div>
+</div>
+<div class="field-travel">
+  <label for="d1">วันที่เดินทางไป</label>
+  <input id="d1" type="date">
+  <div class="date-th-text noprint" id="d1_th"></div>
+  <div class="p-only" id="p_d1"></div>
+</div>
+<div class="field-travel">
+  <label for="d2">วันที่เดินทางกลับ</label>
+  <input id="d2" type="date">
+  <div class="date-th-text noprint" id="d2_th"></div>
+  <div class="p-only" id="p_d2"></div>
+</div>
+
+<div class="field-purchase" style="display:none">
+  <label for="vendor">ชื่อร้านค้า / แหล่งจัดซื้อ</label>
+  <input id="vendor">
+  <div class="p-only" id="p_vendor"></div>
+</div>
+<div class="field-purchase" style="display:none">
+  <label for="buyDate">วันที่จัดซื้อ</label>
+  <input id="buyDate" type="date">
+  <div class="date-th-text noprint" id="buyDate_th"></div>
+  <div class="p-only" id="p_buyDate"></div>
+</div>
+
+</div>
+
+<h2 style="margin-top:22px">รายการค่าใช้จ่าย</h2>
+<div class="noprint rate-box" style="max-width:280px;margin-bottom:10px">
+  <label for="defrate">อัตราเริ่มต้น (บาท/กม.)</label>
+  <input id="defrate" type="number" min="0" step="0.01" value="5">
+</div>
+
+<div class="tw">
+<table>
+<thead>
+  <tr>
+    <th style="width:36px">ที่</th>
+    <th style="width:200px">วันที่</th>
+    <th style="width:240px">ประเภท</th>
+    <th>รายละเอียด</th>
+    <th class="col-km" style="width:70px">กม.</th>
+    <th class="col-rate" style="width:70px">บาท/กม.</th>
+    <th style="width:110px">จำนวนเงิน (บาท)</th>
+    <th style="width:100px">หลักฐาน</th>
+    <th class="noprint" style="width:34px"></th>
+  </tr>
+</thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+<div class="actions noprint"><button class="ghost" id="add">+ เพิ่มรายการ</button></div>
+<div class="tot"><span>รวมเป็นเงินทั้งสิ้น</span><span id="total">0.00</span><span>บาท</span></div>
+<div class="bahttext" id="baht"></div>
+
+<div class="sign-single">
+  <div class="ln"></div>
+  <span id="signTitle">ผู้ขอเบิก</span><br>
+  <div class="p-only" id="signName"></div>
+  <div class="p-only" id="signDate"></div>
+  <span class="hint" style="color:var(--mute)">(ลงชื่อ)</span>
+</div>
+</div>
+
+<div class="paper pagebreak" id="nrPage" style="display:none">
+<h1>ใบรับรองแทนใบเสร็จรับเงิน</h1>
+<p class="sub">กรณีไม่มีใบเสร็จรับเงินหรือผู้รับเงินไม่สามารถออกใบเสร็จให้ได้</p>
+<div style="display:flex;gap:8px;margin-bottom:6px"><span>ข้าพเจ้า</span><b id="nrName" style="flex:1;min-width:0;text-align:center;border-bottom:1px dotted var(--mute)"></b></div>
+<div style="display:flex;gap:8px;margin-bottom:10px"><span>ตำแหน่ง</span><b id="nrPos" style="flex:1;min-width:0;text-align:center;border-bottom:1px dotted var(--mute)"></b><span>สังกัด</span><b id="nrDept" style="flex:1;min-width:0;text-align:center;border-bottom:1px dotted var(--mute)"></b></div>
+<p>ขอรับรองว่ารายจ่ายตามรายการข้างล่างนี้ ไม่อาจเรียกเก็บใบเสร็จรับเงินจากผู้รับเงินได้ เนื่องจาก</p>
+<input id="nrReason" value="ผู้ขาย/ผู้ให้บริการไม่สามารถออกใบเสร็จรับเงินได้" style="margin-bottom:12px">
+<div class="p-only" id="p_nrReason" style="margin-bottom:12px"></div>
+<div class="tw"><table style="min-width:0"><thead><tr><th style="width:40px">ที่</th><th style="width:130px">วันที่</th><th>รายการ</th><th style="width:120px">จำนวนเงิน (บาท)</th></tr></thead><tbody id="nrBody"></tbody></table></div>
+<div class="tot"><span>รวมเป็นเงิน</span><span id="nrTotal">0.00</span><span>บาท</span></div>
+<p style="margin-top:14px">จึงขอรับรองว่าเป็นความจริงทุกประการ</p>
+<div class="sign-single">
+  <div class="ln"></div>
+  <span id="signNrTitle">ผู้รับรอง</span>
+</div>
+</div>
+
+<div class="paper pagebreak" id="attContainer">
+<h2>เอกสารแนบ: หลักฐานการจ่ายเงิน / ใบเสร็จ</h2>
+<div id="attEmpty" style="color:var(--mute);font-size:.9rem;text-align:center;padding:20px 0">ไม่มีหลักฐานแนบ</div>
+<div class="att" id="att"></div>
+</div>
+
+<div class="actions noprint">
+<button id="print">พิมพ์ / บันทึกเป็น PDF</button>
+<button class="ghost" id="clear">ล้างทั้งหมด</button>
+<span id="st" class="noprint" style="color:var(--mute);align-self:center;font-size:.85rem"></span>
+</div>
+</div>
+
+<script>
+const TRAVEL_TYPES = [
+  "ค่าเดินทางตามระยะทาง", "ค่าน้ำมันเชื้อเพลิง", "ค่าทางด่วน / ที่จอดรถ",
+  "ค่าแท็กซี่ / รถรับจ้าง", "ค่าตั๋วโดยสาร", "ค่าที่พัก", "ค่าเบี้ยเลี้ยง", "อื่น ๆ"
+];
+
+const PURCHASE_TYPES = [
+  "วัสดุ / อุปกรณ์สำนักงาน", "อุปกรณ์ไอที / อิเล็กทรอนิกส์", "ค่าโปรแกรม / ซอฟต์แวร์",
+  "ค่าซ่อมบำรุง / อะไหล่", "ค่าพัสดุ / จัดส่ง", "ค่าอาหารและเครื่องดื่ม", "อื่น ๆ"
+];
+
+const COMBINED_TYPES = [...new Set([...TRAVEL_TYPES, ...PURCHASE_TYPES])];
+
+const PURPOSES = {
+  travel: ["เดินทางไปพบลูกค้า","ประชุมนอกสถานที่","ซ่อมบำรุงหน้างาน","เก็บความต้องการ","ทดสอบระบบ","อบรม","ส่งเอกสาร"],
+  purchase: ["จัดซื้อวัสดุอุปกรณ์สำนักงาน","จัดซื้ออุปกรณ์อิเล็กทรอนิกส์","ซื้ออะไหล่ซ่อมแซมอุปกรณ์","ค่าจัดส่งพัสดุ","ค่าขนส่ง"]
+};
+
+function fillPurposePresets(){
+  const sel = document.getElementById('purposePreset');
+  const list = PURPOSES[getSelectedType() === 'purchase' ? 'purchase' : 'travel'];
+  sel.innerHTML = '<option value="">— เลือกวัตถุประสงค์ —</option>' + list.map(t => `<option value="${t}">${t}</option>`).join('') + '<option value="__other">อื่น ๆ</option>';
+
+  // ===== เพิ่ม 2 บรรทัดนี้ =====
+  const cur = document.getElementById('purpose').value;
+  sel.value = list.includes(cur) ? cur : (cur ? '__other' : '');
+  // ============================
+}
+document.getElementById('purposePreset').addEventListener('change', e => {
+  const ta = document.getElementById('purpose'), v = e.target.value;
+  if(v === '__other'){ ta.value = ''; ta.focus(); }
+  else if(v){ ta.value = v; }
+  update();
+});
+
+const TH_MON = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+function todayISO(){
+  const n = new Date();
+  return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
+}
+/* ช่องเลือกวันที่ แบบ วัน / เดือน / ปี พ.ศ. (ค่าเบื้องหลังยังเป็น yyyy-mm-dd เหมือนเดิม) */
+function thaiDateField(inp, compact){
+  if(!inp || inp._thd) return;
+  inp._thd = true;
+  inp.type = 'hidden';
+  const wrap = document.createElement('div');
+  wrap.className = 'thd' + (compact ? ' compact' : '');
+  const dd = document.createElement('select'), mm = document.createElement('select'), yy = document.createElement('select');
+  [dd, mm, yy].forEach((s, i) => s.setAttribute('aria-label', ['วัน', 'เดือน', 'ปี พ.ศ.'][i]));
+  dd.innerHTML = '<option value="">วัน</option>' + Array.from({length: 31}, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('');
+  mm.innerHTML = '<option value="">เดือน</option>' + TH_MON.map((m, i) => `<option value="${i + 1}">${m}</option>`).join('');
+  const cy = new Date().getFullYear() + 543;
+  let ys = '<option value="">พ.ศ.</option>';
+  for(let y = cy - 3; y <= cy + 1; y++) ys += `<option value="${y}">${y}</option>`;
+  yy.innerHTML = ys;
+  wrap.append(dd, mm, yy);
+  inp.insertAdjacentElement('afterend', wrap);
+
+  let val = '';
+  const pad = n => String(n).padStart(2, '0');
+  function fromSelects(){
+    let d = +dd.value, m = +mm.value, y = +yy.value;
+    if(d && m && y){
+      const max = new Date(y - 543, m, 0).getDate();
+      if(d > max){ d = max; dd.value = d; }
+      return `${y - 543}-${pad(m)}-${pad(d)}`;
+    }
+    return '';
+  }
+  function toSelects(v){
+    const mt = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || '');
+    if(!mt){ dd.value = ''; mm.value = ''; yy.value = ''; return; }
+    const by = String(+mt[1] + 543);
+    if(![...yy.options].some(o => o.value === by)) yy.add(new Option(by, by));
+    dd.value = String(+mt[3]); mm.value = String(+mt[2]); yy.value = by;
+  }
+  Object.defineProperty(inp, 'value', {
+    configurable: true,
+    get: () => val,
+    set: v => {
+      const nv = v || '';
+      toSelects(nv);
+      const changed = nv !== val;
+      val = nv;
+      if(changed) inp.dispatchEvent(new Event('input', {bubbles: true}));
+    }
+  });
+  const onChange = () => {
+    val = fromSelects();
+    inp.dispatchEvent(new Event('input', {bubbles: true}));
+    if(typeof update === 'function') update();
+  };
+  [dd, mm, yy].forEach(s => s.addEventListener('change', onChange));
+}
+['date', 'd1', 'd2', 'buyDate'].forEach(id => thaiDateField(document.getElementById(id)));
+
+const rowsEl = document.getElementById('rows');
+let seq = 0;
+
+function toThaiDate(dateStr){
+  if(!dateStr) return '';
+  const d = new Date(dateStr);
+  if(isNaN(d)) return '';
+  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${d.getDate()} ${thMonths[d.getMonth()]} ${d.getFullYear() + 543}`;
+}
+
+function getSelectedType(){
+  return document.querySelector('input[name="formType"]:checked')?.value || 'travel';
+}
+
+function getTypesList(){
+  const t = getSelectedType();
+  if(t === 'travel') return TRAVEL_TYPES;
+  if(t === 'purchase') return PURCHASE_TYPES;
+  return COMBINED_TYPES;
+}
+
+function getSelectedDept(){
+  const checked = document.querySelector('input[name="deptOpt"]:checked')?.value;
+  if(checked === 'other') return document.getElementById('deptOther').value || 'อื่น ๆ';
+  return checked || '';
+}
+
+function updateFormMode(){
+  fillPurposePresets();
+  const mode = getSelectedType();
+  const title = document.getElementById('titleText');
+  const subTitle = document.getElementById('subTitleText');
+  const sign = document.getElementById('signTitle');
+  const travelFields = document.querySelectorAll('.field-travel');
+  const purchaseFields = document.querySelectorAll('.field-purchase');
+  const rateBox = document.querySelector('.rate-box');
+  const kmCols = document.querySelectorAll('.col-km, .col-rate');
+
+  if(mode === 'travel'){
+    title.textContent = 'ใบเบิกค่าใช้จ่ายในการเดินทางและปฏิบัติงาน';
+    subTitle.textContent = 'Travel Expense Reimbursement Form';
+    sign.textContent = 'ผู้ขอเบิก';
+    travelFields.forEach(el => el.style.display = '');
+    purchaseFields.forEach(el => el.style.display = 'none');
+    rateBox.style.display = '';
+    kmCols.forEach(el => el.style.display = '');
+  } else if(mode === 'purchase'){
+    title.textContent = 'ใบขออนุมัติเบิกจ่ายค่าจัดซื้อ / พัสดุเข้าบริษัท';
+    subTitle.textContent = 'Purchase & Expense Requisition Form';
+    sign.textContent = 'ผู้ขอซื้อ';
+    travelFields.forEach(el => el.style.display = 'none');
+    purchaseFields.forEach(el => el.style.display = '');
+    rateBox.style.display = 'none';
+    kmCols.forEach(el => el.style.display = 'none');
+  } else {
+    title.textContent = 'ใบเบิกค่าใช้จ่ายทั่วไปและค่าเดินทาง';
+    subTitle.textContent = 'General Expense & Travel Reimbursement Form';
+    sign.textContent = 'ผู้ขอเบิก / ขอซื้อ';
+    travelFields.forEach(el => el.style.display = '');
+    purchaseFields.forEach(el => el.style.display = '');
+    rateBox.style.display = '';
+    kmCols.forEach(el => el.style.display = '');
+  }
+
+  const types = getTypesList();
+  [...rowsEl.children].forEach(tr => {
+    const sel = tr.querySelector('.rt');
+    const curVal = sel.value;
+    sel.innerHTML = types.map(t => `<option value="${t}">${t}</option>`).join('');
+    if(types.includes(curVal)) sel.value = curVal;
+    tr.querySelectorAll('.col-km, .col-rate').forEach(td => {
+      td.style.display = (mode === 'purchase') ? 'none' : '';
+    });
+  });
+
+  update();
+}
+
+function bindDateDisplay(inputId, textId, printId){
+  const inp = document.getElementById(inputId);
+  const txt = document.getElementById(textId);
+  const prt = document.getElementById(printId);
+  function sync(){
+    const th = toThaiDate(inp.value);
+    if(txt) txt.textContent = th ? `(${th})` : '';
+    if(prt) prt.textContent = th;
+  }
+  inp.addEventListener('input', sync);
+  sync();
+}
+
+function addRow(d){
+  seq++;
+  const tr = document.createElement('tr');
+  tr.dataset.imgs = '[]';
+  const types = getTypesList();
+  const isPurchase = getSelectedType() === 'purchase';
+
+  tr.innerHTML = `<td class="n"></td>
+  <td>
+    <input type="date" class="rd">
+    <div class="date-th-text noprint rdt"></div>
+    <div class="p-only rdp"></div>
+  </td>
+  <td>
+    <select class="rt">${types.map(t=>`<option value="${t}">${t}</option>`).join('')}</select>
+    <div class="p-only rtp"></div>
+  </td>
+  <td>
+    <input class="rs">
+    <div class="p-only rsp"></div>
+  </td>
+  <td class="amt col-km" style="${isPurchase?'display:none':''}">
+    <input class="rk" type="number" min="0" step="0.1">
+    <div class="p-only rkp"></div>
+  </td>
+  <td class="amt col-rate" style="${isPurchase?'display:none':''}">
+    <input class="rr" type="number" min="0" step="0.01">
+    <div class="p-only rrp"></div>
+  </td>
+  <td class="amt">
+    <input class="ra" type="number" min="0" step="0.01">
+    <div class="p-only rap"></div>
+  </td>
+  <td>
+    <label style="display:block;font-size:.8rem"><input type="checkbox" class="rn" style="width:auto"> ไม่มีใบเสร็จ</label>
+    <div class="pv"></div>
+    <label class="fileb noprint">แนบรูป<input type="file" accept="image/*" multiple></label>
+  </td>
+  <td class="noprint"><button class="x" title="ลบรายการ" aria-label="ลบรายการ">✕</button></td>`;
+  rowsEl.appendChild(tr);
+  thaiDateField(tr.querySelector('.rd'), true);
+
+  if(d && d.t !== undefined){
+    tr.querySelector('.rd').value = d.d || '';
+    tr.querySelector('.rt').value = d.t || types[0];
+    tr.querySelector('.rs').value = d.s || '';
+    tr.querySelector('.rk').value = d.k || '';
+    tr.querySelector('.rr').value = d.r || '';
+    tr.querySelector('.ra').value = d.a || '';
+    tr.dataset.imgs = JSON.stringify(d.i || []);
+    tr.querySelector('.rn').checked = !!d.n;
+  } else {
+    tr.querySelector('.rr').value = document.getElementById('defrate').value;
+  }
+
+  tr.querySelector('.ra').addEventListener('input', update);
+  tr.querySelector('.rd').addEventListener('input', update);
+  tr.querySelector('.rt').addEventListener('change', update);
+  tr.querySelector('.rs').addEventListener('input', update);
+  tr.querySelector('.rk').addEventListener('input', update);
+  tr.querySelector('.rr').addEventListener('input', update);
+  tr.querySelector('.x').addEventListener('click', () => { tr.remove(); update(); });
+
+  tr.querySelector('input[type=file]').addEventListener('change', e => {
+    [...e.target.files].forEach(f => {
+      const r = new FileReader();
+      r.onload = () => shrink(r.result, url => {
+        const a = JSON.parse(tr.dataset.imgs);
+        a.push(url);
+        tr.dataset.imgs = JSON.stringify(a);
+        update();
+      });
+      r.readAsDataURL(f);
+    });
+    e.target.value = '';
+  });
+  update();
+}
+
+function shrink(src, cb){
+  const im = new Image();
+  im.onload = () => {
+    const m = 1400, s = Math.min(1, m / Math.max(im.width, im.height));
+    const c = document.createElement('canvas');
+    c.width = im.width * s;
+    c.height = im.height * s;
+    c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+    cb(c.toDataURL('image/jpeg', 0.72));
+  };
+  im.onerror = () => cb(src);
+  im.src = src;
+}
+
+function fmt(n){
+  return (n || 0).toLocaleString('th-TH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
+
+function syncPrintViews(){
+  const fields = ['name','pos','purpose','from','to','vendor','ref','nrReason'];
+  fields.forEach(id => {
+    const inp = document.getElementById(id);
+    const p = document.getElementById('p_' + id);
+    if(inp && p) p.textContent = inp.value;
+  });
+
+  const nm = document.getElementById('name').value;
+  document.getElementById('signName').textContent = nm ? '(' + nm + ')' : '(……………………………………)';
+  document.getElementById('signDate').textContent = 'วันที่ ' + (toThaiDate(document.getElementById('date').value) || '……………………');
+  const deptP = document.getElementById('p_dept');
+  if(deptP) deptP.textContent = getSelectedDept();
+
+  ['date','d1','d2','buyDate'].forEach(id => {
+    const inp = document.getElementById(id);
+    const p = document.getElementById('p_' + id);
+    if(inp && p) p.textContent = toThaiDate(inp.value);
+  });
+}
+
+function update(){
+  let total = 0, evNo = 0;
+  const nr = [];
+  const att = document.getElementById('att');
+  att.innerHTML = '';
+  const isPurchase = getSelectedType() === 'purchase';
+
+  [...rowsEl.children].forEach((tr, i) => {
+    tr.querySelector('.n').textContent = i + 1;
+
+        // ===== เพิ่ม 4 บรรทัดนี้ =====
+    const hasImg = JSON.parse(tr.dataset.imgs || '[]').length > 0;
+    const rn = tr.querySelector('.rn');
+    if(hasImg) rn.checked = false;
+    rn.parentElement.style.display = hasImg ? 'none' : 'block';
+    // =============================
+
+
+    const kVal = parseFloat(tr.querySelector('.rk').value);
+    const rVal = parseFloat(tr.querySelector('.rr').value);
+    const ra = tr.querySelector('.ra');
+
+    if(!isPurchase && kVal > 0 && rVal > 0){
+      ra.value = (kVal * rVal).toFixed(2);
+      ra.readOnly = true;
+    } else {
+      ra.readOnly = false;
+    }
+
+    const itemAmt = parseFloat(ra.value) || 0;
+    total += itemAmt;
+
+    const desc = tr.querySelector('.rs').value || tr.querySelector('.rt').value;
+    const dateVal = tr.querySelector('.rd').value;
+
+    tr.querySelector('.rdp').textContent = toThaiDate(dateVal);
+    tr.querySelector('.rdt').textContent = dateVal ? '(' + toThaiDate(dateVal) + ')' : '';
+    tr.querySelector('.rtp').textContent = tr.querySelector('.rt').value;
+    tr.querySelector('.rsp').textContent = tr.querySelector('.rs').value;
+    tr.querySelector('.rkp').textContent = tr.querySelector('.rk').value;
+    tr.querySelector('.rrp').textContent = tr.querySelector('.rr').value;
+    tr.querySelector('.rap').textContent = fmt(itemAmt);
+
+    if(tr.querySelector('.rn').checked){
+      nr.push([i + 1, dateVal, desc, itemAmt]);
+    }
+
+    const imgs = JSON.parse(tr.dataset.imgs || '[]');
+    const pv = tr.querySelector('.pv');
+    pv.innerHTML = '';
+    imgs.forEach((u, k) => {
+      evNo++;
+      const im = document.createElement('img');
+      im.src = u; im.className = 'thumb'; im.alt = 'หลักฐาน ' + evNo;
+      const lb = document.createElement('div');
+      lb.style.fontSize = '.8rem';
+      lb.textContent = 'หลักฐาน ' + evNo + ' ';
+      const rm = document.createElement('button');
+      rm.className = 'x noprint';
+      rm.textContent = 'ลบ';
+      rm.style.padding = '0 4px';
+      rm.onclick = () => { imgs.splice(k, 1); tr.dataset.imgs = JSON.stringify(imgs); update(); };
+      lb.appendChild(rm);
+      pv.append(im, lb);
+
+      const fg = document.createElement('figure');
+      const big = document.createElement('img');
+      big.src = u; big.alt = 'หลักฐาน ' + evNo;
+      const cap = document.createElement('figcaption');
+      cap.textContent = `หลักฐานที่ ${evNo} (รายการที่ ${i + 1}): ${desc} ${fmt(itemAmt)} บาท`;
+      fg.append(big, cap);
+      att.appendChild(fg);
+    });
+  });
+
+  const nb = document.getElementById('nrBody');
+  nb.innerHTML = '';
+  let nt = 0;
+  nr.forEach(x => {
+    nt += x[3];
+    const t = document.createElement('tr');
+    const dv = toThaiDate(x[1]);
+    [x[0], dv, x[2], fmt(x[3])].forEach((v, j) => {
+      const td = document.createElement('td');
+      td.textContent = v;
+      if(j === 0) td.style.textAlign = 'center';
+      if(j === 3) td.style.textAlign = 'right';
+      t.appendChild(td);
+    });
+    nb.appendChild(t);
+  });
+
+  document.getElementById('nrTotal').textContent = fmt(nt);
+  document.getElementById('nrPage').style.display = nr.length ? 'block' : 'none';
+  document.getElementById('nrName').textContent = document.getElementById('name').value || '……………………';
+  document.getElementById('nrPos').textContent = document.getElementById('pos').value || '……………………';
+  document.getElementById('nrDept').textContent = getSelectedDept() || '……………………';
+
+  document.getElementById('total').textContent = fmt(total);
+  document.getElementById('baht').textContent = total > 0 ? '(' + bahtText(total) + ')' : '';
+
+  const emptyEl = document.getElementById('attEmpty');
+  if(emptyEl) emptyEl.style.display = evNo ? 'none' : 'block';
+  document.getElementById('attContainer').classList.toggle('noprint', !evNo);
+
+  syncPrintViews();
+  save();
+}
+
+rowsEl.addEventListener('input', update);
+rowsEl.addEventListener('change', update);
+
+function bahtText(n){
+  const d = ['ศูนย์','หนึ่ง','สอง','สาม','สี่','ห้า','หก','เจ็ด','แปด','เก้า'];
+  const u = ['','สิบ','ร้อย','พัน','หมื่น','แสน','ล้าน'];
+  function conv(s){
+    if(s.length > 7){ return conv(s.slice(0, -6)) + 'ล้าน' + conv(s.slice(-6)); }
+    let r = '';
+    const L = s.length;
+    for(let i = 0; i < L; i++){
+      const x = +s[i], p = L - i - 1;
+      if(!x) continue;
+      if(p === 1 && x === 1) r += 'สิบ';
+      else if(p === 1 && x === 2) r += 'ยี่สิบ';
+      else if(p === 0 && x === 1 && L > 1 && +s[L - 2] !== 0) r += 'เอ็ด';
+      else r += d[x] + u[p];
+    }
+    return r;
+  }
+  const [b, s] = n.toFixed(2).split('.');
+  let out = (+b ? conv(String(+b)) + 'บาท' : '');
+  out += +s ? conv(String(+s)) + 'สตางค์' : 'ถ้วน';
+  return out || 'ศูนย์บาทถ้วน';
+}
+
+const KEY = 'custom-expense-form-v3';
+const IDS = ['name','pos','date','purpose','from','to','d1','d2','vendor','buyDate','ref','defrate','nrReason','deptOther'];
+let tmr;
+
+function setStatus(t){
+  const s = document.getElementById('st');
+  if(s) s.textContent = t;
+}
+
+function save(){
+  clearTimeout(tmr);
+  tmr = setTimeout(saveNow, 300);
+}
+
+function saveNow(){
+  try{
+    const o = {
+      formType: getSelectedType(),
+      deptOpt: document.querySelector('input[name="deptOpt"]:checked')?.value,
+      f: {},
+      r: []
+    };
+    IDS.forEach(i => {
+      const el = document.getElementById(i);
+      if(el) o.f[i] = el.value;
+    });
+    [...rowsEl.children].forEach(tr => {
+      o.r.push({
+        d: tr.querySelector('.rd').value,
+        t: tr.querySelector('.rt').value,
+        s: tr.querySelector('.rs').value,
+        k: tr.querySelector('.rk').value,
+        r: tr.querySelector('.rr').value,
+        a: tr.querySelector('.ra').value,
+        n: tr.querySelector('.rn').checked,
+        i: JSON.parse(tr.dataset.imgs || '[]')
+      });
+    });
+    sessionStorage.setItem(KEY, JSON.stringify(o));
+    setStatus('บันทึกอัตโนมัติแล้ว');
+  }catch(e){
+    setStatus('บันทึกอัตโนมัติไม่ได้ (รูปอาจมีขนาดใหญ่เกินไป)');
+  }
+}
+
+function load(){
+  try{
+    const o = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+    if(!o) return false;
+    if(o.formType){
+      const rb = document.querySelector(`input[name="formType"][value="${o.formType}"]`);
+      if(rb) rb.checked = true;
+    }
+    if(o.deptOpt){
+      const db = document.querySelector(`input[name="deptOpt"][value="${o.deptOpt}"]`);
+      if(db) db.checked = true;
+      document.getElementById('deptOther').style.display = (o.deptOpt === 'other') ? '' : 'none';
+    }
+    IDS.forEach(i => {
+      if(o.f && o.f[i] !== undefined){
+        const el = document.getElementById(i);
+        if(el) el.value = o.f[i];
+      }
+    });
+    updateFormMode();
+    if(o.r && o.r.length){
+      o.r.forEach(d => addRow(d));
+      return true;
+    }
+    return false;
+  }catch(e){
+    return false;
+  }
+}
+
+document.querySelectorAll('input[name="formType"]').forEach(r => {
+  r.addEventListener('change', updateFormMode);
+});
+
+document.querySelectorAll('input[name="deptOpt"]').forEach(r => {
+  r.addEventListener('change', e => {
+    document.getElementById('deptOther').style.display = (e.target.value === 'other') ? '' : 'none';
+    update();
+  });
+});
+
+document.getElementById('deptOther').addEventListener('input', update);
+
+bindDateDisplay('date', 'date_th', 'p_date');
+bindDateDisplay('d1', 'd1_th', 'p_d1');
+bindDateDisplay('d2', 'd2_th', 'p_d2');
+bindDateDisplay('buyDate', 'buyDate_th', 'p_buyDate');
+
+document.addEventListener('input', e => {
+  if(['name','pos','purpose','from','to','vendor','ref','nrReason'].includes(e.target.id)){
+    update();
+  }
+});
+
+document.getElementById('add').onclick = () => addRow();
+document.getElementById('print').onclick = () => {
+  syncPrintViews();
+  window.print();
+};
+
+document.getElementById('clear').onclick = () => {
+  if(confirm('ล้างข้อมูลทั้งหมด?')){
+    rowsEl.innerHTML = '';
+    document.querySelectorAll('input:not([type=file]):not([type=radio]),textarea').forEach(e => e.value = '');
+    document.getElementById('defrate').value = '5';
+    document.getElementById('nrReason').value = 'ผู้ขาย/ผู้ให้บริการไม่สามารถออกใบเสร็จรับเงินได้';
+    document.getElementById('date').value = todayISO();
+    document.querySelector('input[name="formType"][value="travel"]').checked = true;
+    document.querySelector('input[name="deptOpt"][value="แผนกพัฒนาโปรแกรม"]').checked = true;
+    document.getElementById('deptOther').style.display = 'none';
+    updateFormMode();
+    addRow();
+  }
+};
+
+const okLoad = load();
+const dt = document.getElementById('date');
+if(!dt.value) dt.value = todayISO();
+if(!okLoad){
+  updateFormMode();
+  addRow();
+}
+</script>
+</body>
+</html>
